@@ -1,0 +1,33 @@
+<% layout("/layouts/boilerplate") %>
+
+<body>
+    <h3 class="head">Informaion</h3>
+
+
+    <div class="card show-card" >
+        <img src="<%= listing.image %>" class="card-img-top show-img" alt="img">
+
+        <div class="card-img-overlay">abcde</div>
+
+        <div class="card-body">
+          <p class="card-text">
+            <b><%= listing.title %></b> <br>
+            <%= listing.description %> <br>
+            <%= listing.country %> <br>
+            <%= listing.location %> <br>
+            <b>&#8377; <%= listing.price %></b>/night
+        </p>
+        </div>
+
+
+        <div class="show-btn-div">
+            <form class="show-form" method="GET" action="/listings/<%= listing._id%>/edit">
+                <button class="btn btn-dark show-btn">Edit</button>
+            </form>
+     
+            <form class="show-form" method="POST" action="/listings/<%= listing._id%>?_method=DELETE">
+                <button class="btn btn-dark show-btn dlt-btn">Delete</button>
+            </form>
+        </div>
+    </div>
+</body>

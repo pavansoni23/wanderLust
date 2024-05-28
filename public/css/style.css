@@ -1,0 +1,164 @@
+body{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.container{
+    flex: 1;
+}
+
+a{
+    text-decoration: none !important;
+}
+
+/* Navbar */
+.navbar{
+    height: 5rem;
+}
+
+.fa-space-awesome{
+    color: #FF5A60;
+    font-size: 2rem;
+}
+
+.navbar-brand{
+    color: #FF5A60 !important;
+    font-weight:700;
+}
+
+.nav-link{
+    color: #222222 !important;
+}
+
+
+/* Footer */
+
+
+
+.f-info-links a{
+    text-decoration: none;
+    color: #222222;
+}
+
+.f-info-links a:hover{
+    text-decoration: underline;
+}
+
+.f-info{
+    text-align: center;
+    height: 7rem;
+    background-color: #ebebeb;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.f-info-links , .f-info-socials{
+    width: 100%;
+}
+
+.f-info-socials i{
+    font-size: 1.2rem;
+    margin-right: 1rem;
+}
+
+.f-info-links a{    
+    margin-right: 1rem;
+}
+
+
+
+/* Listings */
+
+.listing-card{
+    height: 26rem !important;
+    width: 19rem;
+    border: none !important;
+    margin: 0.3rem;
+}
+
+.card-img-top{
+    height: 70%;
+    border-radius: 1rem !important;
+}
+
+.listings{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card-body{
+    padding: 0.3rem !important;
+}
+
+
+.card-img-overlay{
+    opacity: none;
+}
+
+
+.card-img-overlay:hover{
+    opacity: 0.2;
+    background-color: white;
+}
+
+
+
+
+/* NEW */
+
+.form-div{
+    margin-bottom: 1.3rem !important;
+}
+
+.new-form{
+    width: 50%;
+    margin: auto;
+}
+
+.head{
+    text-align: center;
+    text-decoration: underline;
+    color: #FF5A60;
+}
+
+.btn{
+    background-color:  #FF5A60 !important;
+    font-weight: 600 !important;
+    color: black !important;
+    border: none !important;
+    margin:  0 45% !important;
+}
+
+label{
+    font-weight: 600;
+}
+
+
+
+/* SHOW */
+
+.show-card{
+    height: 45rem !important;
+    width: 35rem;
+    border: none !important;
+    margin: 0.3rem;
+    margin: auto;
+}
+
+.show-form{
+    display: inline-block;
+}
+
+.show-btn{
+    width: 11.5rem;
+}
+
+.dlt-btn{
+    background-color: #000 !important;
+    color: white !important;
+}
+
