@@ -34,6 +34,7 @@ app.engine("ejs", ejsMate);
 const Listing = require("./models/listing.js");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
+const { listingSchema } = require("./schemaValidation.js")
 
 
 
@@ -48,12 +49,21 @@ app.get("/", (req, res) => {
     res.send("I'm root");
 });
 
+const validateListing = (req, res, next) => {
+    let { error } = listingSchema.validate(req.body);
+    if (error) {
+        throw new ExpressError(400, error);
+    } else {
+        next();
+    }
+};
+
 // INDEX route
-app.get("/listings", async (req, res) => {
+app.get("/listings", wrapAsync(async (req, res) => {
     const allListings = await Listing.find();
 
     res.render("listings/allListings.ejs", { allListings });
-});
+}));
 
 
 
@@ -64,7 +74,9 @@ app.get("/listings/new", (req, res) => {
 
 app.post(
     "/listings",
+    validateListing,
     wrapAsync(async (req, res) => {
+
         const data = req.body.listing;            // req.body k "listing" object ki details extract krega
 
         const newListing = new Listing(data);
@@ -77,56 +89,62 @@ app.post(
 
 
 // EDIT route
-app.get("/listings/:id/edit", async (req, res) => {
+app.get("/listings/:id/edit", wrapAsync(async (req, res) => {
     let { id } = req.params;
 
     const listing = await Listing.findById(id);
 
     res.render("listings/edit.ejs", { listing });
-});
+}));
 
 
-app.put("/listings/:id", async (req, res) => {
-    let { id } = req.params;
 
-    await Listing.findByIdAndUpdate(id, { ...req.body.listing });  // req.body.listing is an object . It is reconstructed to obtain indivisual {key:value} pairs
+// UPDATE route
+app.put("/listings/:id",
+    validateListing,
+    wrapAsync(async (req, res) => {
 
-    res.redirect(`/listings/${id}`);
-});
+        let { id } = req.params;
+
+        await Listing.findByIdAndUpdate(id, { ...req.body.listing });  // req.body.listing is an object . It is reconstructed to obtain indivisual {key:value} pairs
+
+        res.redirect(`/listings/${id}`);
+    }));
 
 
 
 // SHOW route
-app.get("/listings/:id", async (req, res) => {
+app.get("/listings/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
 
     const listing = await Listing.findById(id);
 
     res.render("listings/show.ejs", { listing });
-});
+}));
 
 
 
 // DELETE route
-app.delete("/listings/:id", async (req, res) => {
+app.delete("/listings/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
 
     await Listing.findByIdAndDelete(id);
 
     res.redirect("/listings");
-});
+}));
 
 
-app.all("*" , (req , res , next) => {
-    next(new ExpressError(404 , "Page Not Found"));
+app.all("*", (req, res, next) => {
+    next(new ExpressError(404, "Page Not Found"));
 });
 
 
 
 
 app.use((err, req, res, next) => {
-    let {status , message} = err;
-    res.status(status).send(message);
+    let { status = 500, message = "Something went wrong" } = err;
+    res.status(status).render("error.ejs", { message });
+    // res.status(status).send(message);
 });
 
 app.listen(8080, () => {
