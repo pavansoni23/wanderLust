@@ -1,11 +1,11 @@
 body{
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .container{
-    flex: 1;
+    flex: 1 !important;
 }
 
 a{
@@ -34,7 +34,9 @@ a{
 
 /* Footer */
 
-
+footer{
+    height: 7rem;
+}
 
 .f-info-links a{
     text-decoration: none;
@@ -125,7 +127,7 @@ a{
     color: #FF5A60;
 }
 
-.btn{
+.btn-dark{
     background-color:  #FF5A60 !important;
     font-weight: 600 !important;
     color: black !important;
@@ -160,5 +162,13 @@ label{
 .dlt-btn{
     background-color: #000 !important;
     color: white !important;
+}
+
+
+
+/* Reviews (show.ejs) */
+
+.btn-outline-dark{
+    margin-right: 2rem !important;
 }
 

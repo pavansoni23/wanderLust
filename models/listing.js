@@ -11,13 +11,15 @@ const listingSchema = new mongoose.Schema({
         required : true
     },
 
-    image : {
-        type : String,
-        default : "https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fbuying-a-house&psig=AOvVaw2jIZphJ-cLplSguv-EeFcx&ust=1716587275403000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCMiap5TgpIYDFQAAAAAdAAAAABAE",
-        set : (v) => v === "" ?
-                    "https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fbuying-a-house&psig=AOvVaw2jIZphJ-cLplSguv-EeFcx&ust=1716587275403000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCMiap5TgpIYDFQAAAAAdAAAAABAE"
-                    : v
-    },
+    image: {
+        type: String,
+        default:
+          "https://images.unsplash.com/photo-1625505826533-5c80aca7d157?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGdvYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+        set: (v) =>
+          v === ""
+            ? "https://images.unsplash.com/photo-1625505826533-5c80aca7d157?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGdvYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
+            : v,
+      },
 
     price : {
         type : Number,
@@ -33,6 +35,20 @@ const listingSchema = new mongoose.Schema({
     country : {
         type : String,
         required : true
+    },
+
+    reviews : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : "Review"
+        }
+    ]
+});
+
+
+listingSchema.post("findOneAndDelete" , async(listing) => {
+    if(listing){
+        await Review.deleteMany({_id : {in : listing.reviews}});
     }
 });
 
