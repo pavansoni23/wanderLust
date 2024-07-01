@@ -1,5 +1,11 @@
 <% layout("/layouts/boilerplate") %>
 
+<!-- 
+    novalidate -> browser ki default validation hta dega
+    needs-validation -> bootstrap ki validation implement krega
+    invalid-feedback -> custom text display krega agr koi field incomplete h
+-->
+
     <h3 class="head">Create a New Listing</h3>
     
     <form class="new-form needs-validation" method="POST" action="/listings" novalidate>
@@ -7,6 +13,7 @@
         <div class="form-div">
             <label for="title" class="form-label">Title : </label>
             <input type="text" class="form-control" id="title" placeholder="enter title" name="listing[title]" required>
+
             <div class="invalid-feedback">
                 Please enter valid title
             </div>
@@ -55,7 +62,6 @@
 
         <button class="btn btn-dark">Create</button> <br><br>
     </form>
-
 
 
 

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Review = require("./review.js");
 
 const listingSchema = new mongoose.Schema({
     title : {
@@ -46,12 +47,13 @@ const listingSchema = new mongoose.Schema({
 });
 
 
+// mongoose-post middleware for deletion handling (listing k delete hote hi usse associated sare reviews bhi delete hone chahiye)
 listingSchema.post("findOneAndDelete" , async(listing) => {
     if(listing){
-        await Review.deleteMany({_id : {in : listing.reviews}});
+        await Review.deleteMany({_id : {$in : listing.reviews}});
     }
 });
 
-const Listing = mongoose.model("Listing" , listingSchema);
+const Listing = mongoose.model("Listing" , listingSchema);  // collection -> listings
 
 module.exports = Listing;

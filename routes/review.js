@@ -1,5 +1,6 @@
 const express = require("express");
-const router = express.Router({mergeParams : true});
+const router = express.Router({mergeParams : true});    
+ // parent route ("/listings/:id/reviews") k 'id' parameter ko review.js m use krne k liy , {mergeParams: true}
 
 
 const wrapAsync = require("../utils/wrapAsync.js");
@@ -9,7 +10,7 @@ const Listing = require("../models/listing.js");
 const { reviewSchema } = require("../schemaValidation.js");
 
 
-
+// Validation-middleware (Joi) 
 const validateReview = (req, res, next) => {
     let { error } = reviewSchema.validate(req.body);
     if (error) {
@@ -23,8 +24,8 @@ const validateReview = (req, res, next) => {
 
 
 
-// Reviews
-router.post("/",                                 // / -> "/listings/:id/reviews"
+// CREATE route
+router.post("/",                                     // / -> "/listings/:id/reviews"
     validateReview,
     wrapAsync(async (req, res) => {
         let { id } = req.params;
@@ -38,16 +39,22 @@ router.post("/",                                 // / -> "/listings/:id/reviews"
         await newReview.save();
         await listing.save();
 
+        req.flash("success" , "New Review Created");
+
         res.redirect(`/listings/${id}`);
-    }));
+    })
+);
 
 
 
+// DELETE route
 router.delete("/:reviewId" , wrapAsync(async(req , res) => {
     let {id , reviewId} = req.params;
 
-    await Listing.findByIdAndUpdate(id , {$pull : {reviews : reviewId}});
-    await Review.findByIdAndDelete(reviewId);
+    await Listing.findByIdAndUpdate(id , {$pull : {reviews : reviewId}});    // reviews array m s reviewId wale document ko dlt/pull krdo
+    await Review.findByIdAndDelete(reviewId);     
+    
+    req.flash("success" , "Review Deleted");
 
     res.redirect(`/listings/${id}`);
 }));   

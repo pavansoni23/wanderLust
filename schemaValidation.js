@@ -1,6 +1,7 @@
 // npm i joi
 const Joi = require('joi');
 
+// validating listingSchema
 module.exports.listingSchema = Joi.object({
     listing : Joi.object({
         title : Joi.string().required(),
