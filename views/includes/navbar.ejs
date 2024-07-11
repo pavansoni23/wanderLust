@@ -13,7 +13,8 @@
       <!-- search-btn -->
       <div class="navbar-nav ms-auto">
         <form class="d-flex" role="search">
-          <input class="form-control me-2 search-input" type="search" placeholder="           Search your next destination" aria-label="Search">
+          <input class="form-control me-2 search-input" type="search"
+            placeholder="           Search your next destination" aria-label="Search">
           <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
       </div>
@@ -21,22 +22,21 @@
       <div class="navbar-nav ms-auto">
         <a class="nav-link" href="/listings/new">Post your property</a>
 
-        <% if(!currUser){ %> <!-- user logged-in nhi h   -->
-          <a class="nav-link " aria-current="page" href="/signup"><b>Sign up</b></a>
+        <% if (!currUser) { %>
+          <a class="nav-link" aria-current="page" href="/signup"><b>Sign up</b></a>
           <a class="nav-link" href="/login"><b>Log in</b></a>
           <% } %>
 
-            <% if(currUser){ %> <!-- user logged-in h   -->
+            <% if (currUser) { %>
               <a class="nav-link" href="/logout"><b>Log out</b></a>
               <% } %>
-
       </div>
     </div>
   </div>
 </nav>
 
 <style>
-  .search-btn{
+  .search-btn {
     background-color: #FF5A60;
     color: #fff;
     border-radius: 50%;
@@ -46,7 +46,7 @@
     background-color: #FF5A60;
   }
 
-  .search-input{
+  .search-input {
     border-radius: 4rem;
     width: 20rem;
     /* height: 3rem; */

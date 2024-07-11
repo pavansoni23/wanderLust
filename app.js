@@ -121,15 +121,21 @@ passport.deserializeUser(User.deserializeUser());                   // After ses
 
 
 
-
-
-
-app.use((req , res , next) => {
+app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user;
+    console.log('Current User:', res.locals.currUser); // Debugging line
     next();
 });
+
+
+// app.use((req , res , next) => {
+//     res.locals.success = req.flash("success");
+//     res.locals.error = req.flash("error");
+//     res.locals.currUser = req.user || null;
+//     next();
+// });
 
 
 
@@ -156,7 +162,7 @@ app.use("/" , userRouter);
 // error-handling middleware 
 app.use((err, req, res, next) => {
     let { status = 500, message = "Something went wrong" } = err;
-    res.status(status).render("error.ejs", { message });
+    res.status(status).render("error.ejs" , {message});
 });
 
 
