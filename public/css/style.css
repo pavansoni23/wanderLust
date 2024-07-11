@@ -33,6 +33,51 @@ a{
 }
 
 
+
+/* Category Navbar */
+
+#filters {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+.filter {
+    text-align: center;
+    margin-right: 2rem;
+    opacity: 0.8;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.filter:hover , .tax-toggle:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.filter p {
+    font-size: 0.8rem;
+}
+
+.tax-toggle{
+    border: 1px solid black;
+    border-radius: 0.8rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    opacity: 0.8;
+}
+
+.tax-info{
+    display: none;
+}
+
+
+
+
 /* Footer */
 
 footer{
@@ -163,6 +208,11 @@ label{
 .dlt-btn{
     background-color: #000 !important;
     color: white !important;
+}
+
+.previewImg{
+    height: 10rem;
+    width: 15rem;
 }
 
 

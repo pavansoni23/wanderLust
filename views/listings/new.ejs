@@ -4,11 +4,12 @@
     novalidate -> browser ki default validation hta dega
     needs-validation -> bootstrap ki validation implement krega
     invalid-feedback -> custom text display krega agr koi field incomplete h
+    enctype="multipart/form-data" -> form is capable to send images/files  (accessed by req.file)
 -->
 
     <h3 class="head">Create a New Listing</h3>
     
-    <form class="new-form needs-validation" method="POST" action="/listings" novalidate>
+    <form class="new-form needs-validation" method="POST" action="/listings" novalidate enctype="multipart/form-data">
         
         <div class="form-div">
             <label for="title" class="form-label">Title : </label>
@@ -29,10 +30,7 @@
 
         <div class="form-div">
             <label for="img" class="form-label">Image : </label>
-            <input type="text" class="form-control" id="img" placeholder="enter image url" name="listing[image]">
-            <div class="invalid-feedback">
-                Please enter valid imgae url
-            </div>
+            <input type="file" class="form-control" id="img" name="listing[image]" required>
         </div>
 
         <div class="form-div">

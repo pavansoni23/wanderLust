@@ -19,3 +19,19 @@
     }, false)
   })
 })()
+
+
+
+// tax-toggle btn
+let taxToggle = document.querySelector("#flexSwitchCheckDefault");
+let taxInfo = document.querySelectorAll(".tax-info");
+
+taxToggle.addEventListener("click", () => {
+  for (info of taxInfo) {
+    if (info.style.display != "inline") {
+      info.style.display = "inline";
+    } else {
+      info.style.display = "none";
+    }
+  }
+})

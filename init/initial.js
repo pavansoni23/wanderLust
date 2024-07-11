@@ -1,4 +1,4 @@
-const listingData = require("./data.js");
+let listingData = require("./data.js");
 const Listing = require("../models/listing.js");
 
 
@@ -16,9 +16,17 @@ async function main() {
 
 const initDB = async () => {
     await Listing.deleteMany({});
+
+    // adding owner in each sample-listing
+    listingData = listingData.map((obj) => ({
+        ...obj,
+        owner : '6683bb6cb3ab7bc3421ed92b'
+    }));
+
     await Listing.insertMany(listingData);
 
     console.log("Data initialised");
 }
 
 initDB();
+

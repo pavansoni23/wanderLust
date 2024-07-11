@@ -3,7 +3,7 @@
     <h3 class="head">Edit Listing</h3>
     
     <!-- npm i method-override -->
-    <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" novalidate class="needs-validation">
+    <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" novalidate class="needs-validation" enctype="multipart/form-data">
         <div class="form-div">
             <label for="title">Title : </label>
             <input type="text" class="form-control" id="title" value="<%= listing.title %>" name="listing[title]" required> 
@@ -21,11 +21,14 @@
         </div>
 
         <div class="form-div">
+            Original image <br>
+            <img class="previewImg" src="<%= listing.image.url %>" alt="Original Image">
+        </div>
+
+
+        <div class="form-div">
             <label for="img" class="form-label">Image : </label>
-            <input type="text" class="form-control" id="img" value="<%= listing.image %>" name="listing[image]" required >
-            <div class="invalid-feedback">
-                Please enter valid image url
-            </div>
+            <input type="file" class="form-control" id="img" name="listing[image]">
         </div>
 
         <div class="form-div">

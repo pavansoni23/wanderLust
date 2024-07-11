@@ -9,6 +9,10 @@
     npm i passport 
     npm i passport-local
     npm i passport-local-mongoose
+    npm i multer                  ------> middleware to parse mulitpart/form-data (uploading images/files)
+    npm i dotenv                  ------> used to extract out environment varibales from .env file  (accessed by process.env)
+    npm i cloudinary
+    npm i multer-storage-cloudinary
 */
 
 
@@ -22,10 +26,18 @@ const ejsMate = require("ejs-mate");
 app.engine("ejs", ejsMate);
 
 const mongoose = require("mongoose");
+
+// Database used is "wanderLust" (in localhost)  mongodb://127.0.0.1:27017/wanderLust
 main().catch(err => console.log(err));
+// const atlasdbUrl = process.env.ATLASDB_URL;
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/wanderLust');   // Database used is "wanderLust"
-}   
+    await mongoose.connect('mongodb+srv://sonipavanps07:pvnSoni_0716@cluster0.dgnamd0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');  
+}
+
+// if (process.env.NODE_ENV != "production") {
+//     require("dotenv").config();
+// }
+
 
 // -------------------------------------------------------------------------------------------------------------------- //
 
@@ -37,21 +49,34 @@ async function main() {
 
 const ExpressError = require("./utils/ExpressError.js");
 
-
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
-
 
 const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
 
-
-
-
 // express-session
 const session = require("express-session");
+const MongoStore = require('connect-mongo'); // Declare MongoStore here
+
+const store = MongoStore.create({
+    mongoUrl : 'mongodb+srv://sonipavanps07:pvnSoni_0716@cluster0.dgnamd0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
+    crypto : {
+        secret : 'mySuperSecretCode'
+    },
+
+    touchAfter : 24*3600
+});
+
+store.on("error" , (err) => {
+    console.log("ERROR IN MONGO SESSION STORE : " , err);
+})
+
+
+
 
 const sessionOptions = {
+    store : store,
     secret : "mySuperSecretCode",
     resave : false,
     saveUninitialized : true,
@@ -116,6 +141,7 @@ app.use((req , res , next) => {
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
+// const MongoStore = require("connect-mongo");
 
 
 
@@ -134,9 +160,7 @@ app.use((err, req, res, next) => {
 });
 
 
-app.get("/", (req, res) => {
-    res.send("I'm root");
-});
+
 
 
 app.all("*", (req, res, next) => {

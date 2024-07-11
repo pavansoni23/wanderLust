@@ -1,28 +1,54 @@
-<nav class="navbar navbar-expand-md bg-body-tertiary border-bottom sticky-top">
+<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/"><i class="fa-brands fa-space-awesome"></i> wanderLust</a>
+    <a class="navbar-brand" href="/listings"><i class="fa-brands fa-space-awesome"></i> wanderLust</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
       aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link " aria-current="page" href="/">Home</a>
-        <a class="nav-link" href="/listings">All Listings</a>
-        <a class="nav-link" href="/listings/new">Create new Listing</a>
+        <a class="nav-link" href="/listings">Explore</a>
+      </div>
+
+      <!-- search-btn -->
+      <div class="navbar-nav ms-auto">
+        <form class="d-flex" role="search">
+          <input class="form-control me-2 search-input" type="search" placeholder="           Search your next destination" aria-label="Search">
+          <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
       </div>
 
       <div class="navbar-nav ms-auto">
-           <% if(!currUser){ %>                                                <!-- user logged-in nhi h   -->
-              <a class="nav-link " aria-current="page" href="/signup">SignUp</a>
-              <a class="nav-link" href="/login">LogIn</a>
+        <a class="nav-link" href="/listings/new">Post your property</a>
+
+        <% if(!currUser){ %> <!-- user logged-in nhi h   -->
+          <a class="nav-link " aria-current="page" href="/signup"><b>Sign up</b></a>
+          <a class="nav-link" href="/login"><b>Log in</b></a>
           <% } %>
 
-          <% if(currUser){ %>                                                   <!-- user logged-in h   -->
-              <a class="nav-link" href="/logout">LogOut</a>
-          <% } %>
+            <% if(currUser){ %> <!-- user logged-in h   -->
+              <a class="nav-link" href="/logout"><b>Log out</b></a>
+              <% } %>
 
       </div>
     </div>
   </div>
 </nav>
+
+<style>
+  .search-btn{
+    background-color: #FF5A60;
+    color: #fff;
+    border-radius: 50%;
+  }
+
+  .search-btn:hover {
+    background-color: #FF5A60;
+  }
+
+  .search-input{
+    border-radius: 4rem;
+    width: 20rem;
+    /* height: 3rem; */
+  }
+</style>
