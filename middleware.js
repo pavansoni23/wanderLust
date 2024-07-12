@@ -4,6 +4,34 @@ const ExpressError = require("./utils/ExpressError.js");
 const { listingSchema, reviewSchema } = require("./schemaValidation.js");
 
 
+
+module.exports.isLoggedIn = (req, res, next) => {
+    if (!req.isAuthenticated()) {                                          // if user is not logged-in
+        req.flash("error", "you must be logged in to create listing");
+        return res.redirect("/login");
+    }
+
+    next();
+};
+
+
+
+module.exports.isOwner = async (req, res, next) => {
+
+    let { id } = req.params;
+
+    let listing = await Listing.findById(id);
+
+    if (!res.locals.currUser._id.equals(listing.owner._id)) {
+        req.flash("error", "you are not the owner of this listing");
+        return res.redirect(`/listings/${id}`);
+    }
+
+    next();
+}
+
+
+
 // Validation-middleware (Joi)  
 module.exports.validateListing = (req, res, next) => {
     let { error } = listingSchema.validate(req.body);
@@ -25,29 +53,6 @@ module.exports.validateReview = (req, res, next) => {
 
 
 
-module.exports.isLoggedIn = (req, res, next) => {
-    if (!req.isAuthenticated()) {                                          // if user is not logged-in
-        req.flash("error", "you must be logged in to create listing");
-        return res.redirect("/login");
-    }
-
-    next();
-};
-
-
-module.exports.isOwner = async (req, res, next) => {
-
-    let { id } = req.params;
-
-    let listing = await Listing.findById(id);
-
-    if (!res.locals.currUser._id.equals(listing.owner._id)) {
-        req.flash("error", "you are not the owner of this listing");
-        return res.redirect(`/listings/${id}`);
-    }
-
-    next();
-}
 
 
 

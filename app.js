@@ -34,9 +34,9 @@ async function main() {
     await mongoose.connect('mongodb+srv://sonipavanps07:pvnSoni_0716@cluster0.dgnamd0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');  
 }
 
-// if (process.env.NODE_ENV != "production") {
-//     require("dotenv").config();
-// }
+if (process.env.NODE_ENV != "production") {
+    require("dotenv").config();
+}
 
 
 // -------------------------------------------------------------------------------------------------------------------- //
@@ -118,24 +118,23 @@ passport.deserializeUser(User.deserializeUser());                   // After ses
 
 
 
-
-
-
-app.use((req, res, next) => {
-    res.locals.success = req.flash("success");
-    res.locals.error = req.flash("error");
-    res.locals.currUser = req.user;
-    console.log('Current User:', res.locals.currUser); // Debugging line
-    next();
+app.get("/" , (req , res) => {
+    res.render("home.ejs");
 });
 
 
-// app.use((req , res , next) => {
-//     res.locals.success = req.flash("success");
-//     res.locals.error = req.flash("error");
-//     res.locals.currUser = req.user || null;
-//     next();
-// });
+
+
+
+app.use((req , res , next) => {
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    res.locals.currUser = req.user;
+
+    console.log("currUser ---->" , res.locals.currUser);
+
+    next();
+});
 
 
 
@@ -151,11 +150,18 @@ const userRouter = require("./routes/user.js");
 
 
 
+
 // setting up parent route
 app.use("/listings" , listingRouter);  // jitne bhi routes "/listings" s start ho rhe h , unkimapping "./routes/listing.js" wale folder m krdo.
 app.use("/listings/:id/reviews" , reviewRouter);   
 app.use("/" , userRouter);
 
+
+
+
+app.all("*", (req, res, next) => {
+    next(new ExpressError(404, "Page Not Found"));
+});
 
 
 
@@ -166,12 +172,6 @@ app.use((err, req, res, next) => {
 });
 
 
-
-
-
-app.all("*", (req, res, next) => {
-    next(new ExpressError(404, "Page Not Found"));
-});
 
 
 app.listen(8080, () => {
